@@ -24,7 +24,7 @@ const ConvertForm = () => {
 
   if (isLoading) return <Loading />;
 
-  // 🔢 Calculation Function
+  // Calculation Function
   const calculateExchange = () => {
     if (!rates[from] || !rates[to] || !amount) return 0;
 
@@ -34,13 +34,38 @@ const ConvertForm = () => {
     return (Number(amount) / fromRate) * toRate;
   };
 
-  // ⏳ Handle Submit
+  //  Handle Submit
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    //  Validation: currency not selected
+    if (!from || !to) {
+      alert("Please select both From and To currencies.");
+      return;
+    }
+
+    //  Validation: same currency
+    if (from === to) {
+      alert("From and To currencies must be different.");
+      return;
+    }
+
+    //  Validation: amount
+    if (!amount || Number(amount) <= 0) {
+      alert("Please enter a valid amount.");
+      return;
+    }
+
     const value = calculateExchange();
+
+    if (value === 0) {
+      alert("Unable to calculate exchange rate.");
+      return;
+    }
+
     setResult(value);
 
-    // 📝 Add to history
+    // Save only valid conversion
     addHistory({
       from,
       to,
@@ -99,6 +124,9 @@ const ConvertForm = () => {
             onChange={(e) => setFrom(e.target.value)}
             className="w-full px-5 py-3 border border-green-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 transition"
           >
+            <option value="" disabled hidden>
+              Select currency
+            </option>
             {Object.keys(rates).map((key) => (
               <option key={key} value={key}>
                 {key}
@@ -115,6 +143,9 @@ const ConvertForm = () => {
             onChange={(e) => setTo(e.target.value)}
             className="w-full px-5 py-3 border border-green-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 transition"
           >
+            <option value="" disabled hidden>
+              Select currency
+            </option>
             {Object.keys(rates).map((key) => (
               <option key={key} value={key}>
                 {key}

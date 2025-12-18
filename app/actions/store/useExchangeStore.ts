@@ -13,8 +13,8 @@ interface ExchangeState {
 
 export const useExchangeStore = create<ExchangeState>((set, get) => ({
   amount: "",
-  from: "USD",
-  to: "MMK",
+  from: "",
+  to: "",
 
   setAmount: (value) => set({ amount: value }),
   setFrom: (value) => set({ from: value }),
