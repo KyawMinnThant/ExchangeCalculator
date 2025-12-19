@@ -5,6 +5,7 @@ import HistoryCard from "../components/historycard";
 import { useExchangeHistoryStore } from "../actions/store/useExchangeHistoryStore";
 import { useRouter } from "next/navigation";
 import { IoArrowBack } from "react-icons/io5";
+import Link from "next/link";
 
 const ExchangeHistory = () => {
   const { history, clearHistory } = useExchangeHistoryStore();
@@ -15,12 +16,12 @@ const ExchangeHistory = () => {
       {/* TOP SECTION */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 w-full">
         {/* Back Button */}
-        <button
-          onClick={() => router.back()}
+        <Link
+          href={"/convertcurrency"}
           className="flex items-center gap-2 bg-green-200 hover:bg-green-300 text-green-800 px-4 py-2 rounded-xl font-medium transition w-fit"
         >
           <IoArrowBack className="text-xl" /> Back
-        </button>
+        </Link>
 
         {/* Title */}
         <p className="text-xl sm:text-3xl font-semibold text-center text-green-500 flex-1 sm:order-none order-first">
